@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { singUp } from "./api";
 import { Input } from "./commponents/input";
 import { useTranslation } from "react-i18next";
+import { LanguageSelector } from "../../shred/componants/LanguageSelector";
 
 function SingUp() {
   const [username, setUserName] = useState();
@@ -204,6 +205,7 @@ function SingUp() {
             </button>
           </div>
         </form>
+        <LanguageSelector/>
       </div>
     </div>
   );
