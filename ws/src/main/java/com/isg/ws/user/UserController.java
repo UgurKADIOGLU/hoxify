@@ -28,7 +28,7 @@ public class UserController {
     GenericMessage createUser(@Valid @RequestBody User user){
 
         userService.save(user);
-        String message= messageSource.getMessage("hoaxify.constraint.email.notunique",null, LocaleContextHolder.getLocale());
+        String message= messageSource.getMessage("hoaxify.create.user.success.message",null, LocaleContextHolder.getLocale());
         return new GenericMessage(message);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -36,7 +36,8 @@ public class UserController {
     ApiError handleMethodArgNotValidEx(MethodArgumentNotValidException exception){
         ApiError apiError=new ApiError();
         apiError.setPath("/api/v1/users");
-        apiError.setMessage("Validation errors");
+        String message= messageSource.getMessage("hoaxify.error.validation",null, LocaleContextHolder.getLocale());
+        apiError.setMessage(message);
         apiError.setStatus(400);
         Map<String,String> validationErrors=new HashMap<>();
 
@@ -55,7 +56,8 @@ public class UserController {
     ApiError handleNotUniqueEmail(NotUniqueEmailException exception){
         ApiError apiError=new ApiError();
         apiError.setPath("/api/v1/users");
-        apiError.setMessage("Validation errors");
+        String message= messageSource.getMessage("hoaxify.constraint.email.notunique",null, LocaleContextHolder.getLocale());
+        apiError.setMessage(message);
         apiError.setStatus(400);
         Map<String,String> validationErrors=new HashMap<>();
         validationErrors.put("email","email in use");

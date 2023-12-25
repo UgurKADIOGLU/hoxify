@@ -14,7 +14,7 @@ public class User {
     @GeneratedValue()
     long Id;
     @NotBlank(message = "{hoaxify.constraint.username.not-blank}")
-    //@Size(min=4,max = 255)
+    @Size(min=4,max = 255)
     String username;
     @NotBlank
     @Email
