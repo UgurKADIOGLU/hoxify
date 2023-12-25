@@ -3,17 +3,16 @@ package com.isg.ws.user;
 import com.isg.ws.error.ApiError;
 import com.isg.ws.shared.GenericMessage;
 import com.isg.ws.shared.Messages;
+import com.isg.ws.user.exception.NotUniqueEmailException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 

@@ -1,0 +1,8 @@
+{
+  "singUp": "Sing Up",
+  "userName": "User Name",
+  "email": "E-mail",
+  "password": "Password",
+  "passwordRepeat": "Password Repeat",
+  "passwordMismatch": "Password mismatch"
+}

@@ -1,0 +1,8 @@
+{
+  "singUp": "Kayıt ol",
+  "userName": "Kullanici Adı",
+  "email": "E-posta",
+  "password": "Şifre",
+  "passwordRepeat": "Şifre Tekrarı",
+  "passwordMismatch": "Şifre uymsuz"
+}

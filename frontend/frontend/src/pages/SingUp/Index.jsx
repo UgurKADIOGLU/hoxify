@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { singUp } from "./api";
 import { Input } from "./commponents/input";
+import { useTranslation } from "react-i18next";
 
 function SingUp() {
   const [username, setUserName] = useState();
@@ -11,6 +12,7 @@ function SingUp() {
   const [successMesage, setSuccessMesage] = useState();
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState();
+  const{t}=useTranslation();
 
   useEffect(() => {
     setErrors(function (lastErrors) {
@@ -78,7 +80,7 @@ function SingUp() {
 
   let passwordRepeatError = useMemo(() => {
     if (password && password !== rePassword) {
-     return "password miss mach";
+     return t("passwordMismatch")
     }
   }, [password, rePassword]);
 
@@ -87,12 +89,12 @@ function SingUp() {
       <div className="col-lg-6 offset-lg-3">
         <form className="card" onSubmit={onSubmit}>
           <div className="card-header">
-            <h1>Sing Up</h1>
+            <h1> {t("singUp")} </h1>
           </div>
           <div className="card-body">
             <Input
               id="username"
-              label="User Name"
+              label={t("userName")}
               error={errors.username}
               onChange={(event) => {
                 setUserName(event.target.value);
@@ -117,7 +119,7 @@ function SingUp() {
 
             <Input
               id="email"
-              label="E-mail"
+              label={t("email")}
               error={errors.email}
               onChange={(event) => {
                 setEmail(event.target.value);
@@ -142,7 +144,7 @@ function SingUp() {
             </div> */}
             <Input
               id="password"
-              label="Password"
+              label={t("password")}
               error={errors.password}
               onChange={(event) => {
                 setPassword(event.target.value);
@@ -164,7 +166,7 @@ function SingUp() {
             </div> */}
             <Input
               id="rePassword"
-              label="Password Repeat"
+              label={t("passwordRepeat")}
               error={errors.rePassword}
               onChange={(event) => {
                 setRePassword(event.target.value);
@@ -198,7 +200,7 @@ function SingUp() {
                   aria-hidden="true"
                 ></span>
               )}
-              Sing Up
+              {t("singUp")}
             </button>
           </div>
         </form>
