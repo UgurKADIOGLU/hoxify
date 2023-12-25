@@ -1,5 +1,6 @@
 package com.isg.ws.user;
 
+import com.isg.ws.dto.UserCreate;
 import com.isg.ws.error.ApiError;
 import com.isg.ws.shared.GenericMessage;
 import com.isg.ws.shared.Messages;
@@ -25,9 +26,9 @@ public class UserController {
     MessageSource messageSource;*/
 
     @PostMapping("/api/v1/users")
-    GenericMessage createUser(@Valid @RequestBody User user){
+    GenericMessage createUser(@Valid @RequestBody UserCreate user){
 
-        userService.save(user);
+        userService.save(user.toUser());
         String message= Messages.getMessageForLocle("hoaxify.create.user.success.message",LocaleContextHolder.getLocale());
         return new GenericMessage(message);
     }

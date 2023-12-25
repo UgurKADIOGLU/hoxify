@@ -1,11 +1,8 @@
 package com.isg.ws.user;
 
-import com.isg.ws.user.validation.UniqueEmail;
+
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "users",uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
@@ -13,16 +10,30 @@ public class User {
     @Id
     @GeneratedValue()
     long Id;
-    @NotBlank(message = "{hoaxify.constraint.username.not-blank}")
-    @Size(min=4,max = 255)
+
     String username;
-    @NotBlank
-    @Email
-    @UniqueEmail
     String email;
-    @NotBlank
-    @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",message = "{hoaxify.constraint.password.pattern}")
     String password;
+
+    boolean active=false;
+
+    String ativationToken;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getAtivationToken() {
+        return ativationToken;
+    }
+
+    public void setAtivationToken(String ativationToken) {
+        this.ativationToken = ativationToken;
+    }
 
     public long getId() {
         return Id;
