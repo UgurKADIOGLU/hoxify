@@ -2,6 +2,7 @@ package com.isg.ws.user;
 
 import com.isg.ws.error.ApiError;
 import com.isg.ws.shared.GenericMessage;
+import com.isg.ws.shared.Messages;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,14 +22,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    MessageSource messageSource;
+    /*@Autowired
+    MessageSource messageSource;*/
 
     @PostMapping("/api/v1/users")
     GenericMessage createUser(@Valid @RequestBody User user){
 
         userService.save(user);
-        String message= messageSource.getMessage("hoaxify.create.user.success.message",null, LocaleContextHolder.getLocale());
+        String message= Messages.getMessageForLocle("hoaxify.create.user.success.message",LocaleContextHolder.getLocale());
         return new GenericMessage(message);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -36,7 +37,7 @@ public class UserController {
     ApiError handleMethodArgNotValidEx(MethodArgumentNotValidException exception){
         ApiError apiError=new ApiError();
         apiError.setPath("/api/v1/users");
-        String message= messageSource.getMessage("hoaxify.error.validation",null, LocaleContextHolder.getLocale());
+        String message= Messages.getMessageForLocle("hoaxify.error.validation",LocaleContextHolder.getLocale());
         apiError.setMessage(message);
         apiError.setStatus(400);
         Map<String,String> validationErrors=new HashMap<>();
@@ -56,16 +57,15 @@ public class UserController {
     ApiError handleNotUniqueEmail(NotUniqueEmailException exception){
         ApiError apiError=new ApiError();
         apiError.setPath("/api/v1/users");
-        String message= messageSource.getMessage("hoaxify.constraint.email.notunique",null, LocaleContextHolder.getLocale());
-        apiError.setMessage(message);
+
+        apiError.setMessage(exception.getMessage());
         apiError.setStatus(400);
-        Map<String,String> validationErrors=new HashMap<>();
-        validationErrors.put("email","email in use");
+
         /*for (var fieldError:exception.getBindingResult().getFieldErrors()) {
             validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
         }*/
         /*var validationErrors=exception.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField,FieldError::getDefaultMessage,(existing,replacing)->existing));*/
-        apiError.setValidationErrors(validationErrors);
+        apiError.setValidationErrors(exception.getValidationErrors());
         return apiError;
     }
 
