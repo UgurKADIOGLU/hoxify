@@ -4,6 +4,7 @@ import com.isg.ws.dto.UserCreate;
 import com.isg.ws.error.ApiError;
 import com.isg.ws.shared.GenericMessage;
 import com.isg.ws.shared.Messages;
+import com.isg.ws.user.exception.AtivationNotifictionException;
 import com.isg.ws.user.exception.NotUniqueEmailException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,22 @@ public class UserController {
         }*/
         /*var validationErrors=exception.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField,FieldError::getDefaultMessage,(existing,replacing)->existing));*/
         apiError.setValidationErrors(exception.getValidationErrors());
+        return apiError;
+    }
+    @ExceptionHandler(AtivationNotifictionException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ApiError handleNotActivationEmail(AtivationNotifictionException exception){
+        ApiError apiError=new ApiError();
+        apiError.setPath("/api/v1/users");
+
+        apiError.setMessage(exception.getMessage());
+        apiError.setStatus(502);
+
+        /*for (var fieldError:exception.getBindingResult().getFieldErrors()) {
+            validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }*/
+        /*var validationErrors=exception.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField,FieldError::getDefaultMessage,(existing,replacing)->existing));*/
+
         return apiError;
     }
 

@@ -3,6 +3,7 @@ import { singUp } from "./api";
 import { Input } from "./commponents/input";
 import { useTranslation } from "react-i18next";
 import { LanguageSelector } from "../../shred/componants/LanguageSelector";
+import axios from "axios";
 
 function SingUp() {
   const [username, setUserName] = useState();
@@ -13,7 +14,7 @@ function SingUp() {
   const [successMesage, setSuccessMesage] = useState();
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState();
-  const{t}=useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setErrors(function (lastErrors) {
@@ -66,11 +67,12 @@ function SingUp() {
       setSuccessMesage(response.data.message);
       setErrors({});
     } catch (axiosError) {
-      if (
-        axiosError.response?.data &&
-        axiosError.response.data.status === 400
-      ) {
-        setErrors(axiosError.response.data.validationErrors);
+      if (axiosError.response?.data) {
+        if (axiosError.response.data.status === 400) {
+          setErrors(axiosError.response.data.validationErrors);
+        } else {
+          setGeneralError(axiosError.response.data.message)
+        }
       } else {
         setGeneralError("Unexpected error occured. Please try again.");
       }
@@ -81,7 +83,7 @@ function SingUp() {
 
   let passwordRepeatError = useMemo(() => {
     if (password && password !== rePassword) {
-     return t("passwordMismatch")
+      return t("passwordMismatch");
     }
   }, [password, rePassword]);
 
@@ -205,7 +207,7 @@ function SingUp() {
             </button>
           </div>
         </form>
-        <LanguageSelector/>
+        <LanguageSelector />
       </div>
     </div>
   );
