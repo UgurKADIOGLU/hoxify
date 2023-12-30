@@ -9,14 +9,14 @@ import router from "./router";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+ 
     <RouterProvider router={router} />
-    {/* <BrowserRouter>
+    /* <BrowserRouter>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/singup' element={<SingUp/>}/>
       
     </Routes>
-    </BrowserRouter> */}
-  </React.StrictMode>
+    </BrowserRouter> */
+ 
 );

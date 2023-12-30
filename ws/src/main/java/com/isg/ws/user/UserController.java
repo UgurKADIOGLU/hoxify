@@ -5,6 +5,7 @@ import com.isg.ws.error.ApiError;
 import com.isg.ws.shared.GenericMessage;
 import com.isg.ws.shared.Messages;
 import com.isg.ws.user.exception.AtivationNotifictionException;
+import com.isg.ws.user.exception.InvalidTokenException;
 import com.isg.ws.user.exception.NotUniqueEmailException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,14 @@ public class UserController {
         String message= Messages.getMessageForLocle("hoaxify.create.user.success.message",LocaleContextHolder.getLocale());
         return new GenericMessage(message);
     }
+
+    @PatchMapping("/api/v1/users/{token}/active")
+    GenericMessage activateUser(@PathVariable String token){
+        userService.activateUser(token);
+        String message = Messages.getMessageForLocle("hoaxify.activate.user.success.message", LocaleContextHolder.getLocale());
+        return new GenericMessage(message);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     ApiError handleMethodArgNotValidEx(MethodArgumentNotValidException exception){
@@ -84,7 +93,25 @@ public class UserController {
         /*var validationErrors=exception.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField,FieldError::getDefaultMessage,(existing,replacing)->existing));*/
 
         return apiError;
+
+
     }
+    @ExceptionHandler(InvalidTokenException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ApiError handleInvalidTokenException(InvalidTokenException exception){
+        ApiError apiError=new ApiError();
+        apiError.setPath("/api/v1/users");
+
+        apiError.setMessage(exception.getMessage());
+        apiError.setStatus(400);
+
+        /*for (var fieldError:exception.getBindingResult().getFieldErrors()) {
+            validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }*/
+        /*var validationErrors=exception.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField,FieldError::getDefaultMessage,(existing,replacing)->existing));*/
+
+        return apiError;
 
 
+}
 }
