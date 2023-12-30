@@ -1,15 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
 //import App from './App.jsx'
-import "./styles.scss"
-import "./locales"
+import "./styles.scss";
+import "./locales";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
 
-import SingUp from './pages/SingUp/Index.jsx'
 
 
-
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <SingUp/>
-  </React.StrictMode>,
-)
+    <RouterProvider router={router} />
+    {/* <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Home/>}/>
+      <Route path='/singup' element={<SingUp/>}/>
+      
+    </Routes>
+    </BrowserRouter> */}
+  </React.StrictMode>
+);
