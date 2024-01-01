@@ -16,7 +16,7 @@ public record UserCreate (
         @UniqueEmail
         String email,
         @NotBlank
-        @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",message = "{hoaxify.constraint.password.pattern}")
+        //@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",message = "{hoaxify.constraint.password.pattern}")
         String password
 ){
     public User toUser(){

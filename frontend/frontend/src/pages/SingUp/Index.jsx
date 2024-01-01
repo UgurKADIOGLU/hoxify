@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { singUp } from "./api";
 import { Input } from "./commponents/input";
 import { useTranslation } from "react-i18next";
-import { LanguageSelector } from "../../shred/componants/LanguageSelector";
+import { Alert } from "@/shred/componants/Alert";
 
 
 function SingUp() {
@@ -190,9 +190,9 @@ function SingUp() {
               ></input>
             </div> */}
 
-            {successMesage && <div>{successMesage}</div>}
-            {generalError && <div>{generalError}</div>}
-            {passwordRepeatError && <div>{passwordRepeatError}</div>}
+            {successMesage && <Alert>{successMesage}</Alert>}
+            {generalError && <Alert styleType="danger">{generalError}</Alert>}
+            {passwordRepeatError && <Alert styleType="danger">{passwordRepeatError}</Alert>}
             <button
               disabled={apiProgres || (password === rePassword ? false : true)}
               className="btn btn-primary"

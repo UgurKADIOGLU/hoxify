@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { activateUser } from "./api";
+import { Alert } from "../../shred/componants/Alert";
 
 export default function Activation() {
   const { token } = useParams();
@@ -29,9 +30,9 @@ export default function Activation() {
         <span className="spinner-border" aria-hidden="true"></span>
       )}
       {successMessage && (
-        <div className="alert alert-success">{successMessage}</div>
+        <Alert>{successMessage}</Alert>
       )}
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {errorMessage && <Alert styleType="danger">{errorMessage}</Alert>}
     </>
   );
 }

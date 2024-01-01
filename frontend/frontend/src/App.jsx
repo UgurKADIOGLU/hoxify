@@ -1,29 +1,17 @@
-import { Link, Outlet } from 'react-router-dom'
-import logo from "./assets/hoaxify.png"
+import { Outlet } from 'react-router-dom'
+
 import { LanguageSelector } from './shred/componants/LanguageSelector'
-import { useTranslation } from 'react-i18next'
+
+import { NavBar } from './shred/componants/NavBar'
 
 function App() {
 
-  const {t} =useTranslation()
+  
   
 
   return (
     <>
-    <nav className="navbar navbar-expand bg-body-tertiary shadow-sm">
-  <div className="container-fluid">
-    <Link className="navbar-brand" to="/">
-      <img src={logo} width={60}/>
-      Hoxify
-      </Link>
-      <ul className='navbar-nav'>
-        <li className='nav-item'>
-          <Link className='nav-link' to='/singup'>{t("singUp")}</Link>
-          
-        </li>
-      </ul>
-  </div>
-</nav>
+    <NavBar/>
 <div className='container mt-3'>
   <Outlet/>
   <LanguageSelector />
