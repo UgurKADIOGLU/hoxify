@@ -1,6 +1,7 @@
 package com.isg.ws.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -13,11 +14,23 @@ public class User {
 
     String username;
     String email;
+    @JsonIgnore
     String password;
-
+    @JsonIgnore
     boolean active=false;
-
+    @JsonIgnore
     String ativationToken;
+
+    String image;
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public boolean isActive() {
         return active;

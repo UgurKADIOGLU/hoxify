@@ -1,9 +1,8 @@
 import React from 'react'
+import { UserList } from './components/UserList'
 
 function Home() {
-  return (
-    <div>index</div>
-  )
+  return <UserList/>
 }
 
 export default Home

@@ -1,6 +1,7 @@
 package com.isg.ws.user;
 
 import com.isg.ws.dto.UserCreate;
+import com.isg.ws.dto.UserDto;
 import com.isg.ws.error.ApiError;
 import com.isg.ws.shared.GenericMessage;
 import com.isg.ws.shared.Messages;
@@ -11,6 +12,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +43,11 @@ public class UserController {
         userService.activateUser(token);
         String message = Messages.getMessageForLocle("hoaxify.activate.user.success.message", LocaleContextHolder.getLocale());
         return new GenericMessage(message);
+    }
+
+    @GetMapping("/api/v1/users")
+    Page<UserDto> getUsers(Pageable pageable){
+        return userService.getUsers(pageable).map(UserDto::new);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
