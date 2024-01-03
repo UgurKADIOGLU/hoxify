@@ -7,7 +7,10 @@ import com.isg.ws.shared.GenericMessage;
 import com.isg.ws.shared.Messages;
 import com.isg.ws.user.exception.AtivationNotifictionException;
 import com.isg.ws.user.exception.InvalidTokenException;
+import com.isg.ws.user.exception.NotFoundException;
 import com.isg.ws.user.exception.NotUniqueEmailException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,6 +51,10 @@ public class UserController {
     @GetMapping("/api/v1/users")
     Page<UserDto> getUsers(Pageable pageable){
         return userService.getUsers(pageable).map(UserDto::new);
+    }
+    @GetMapping("/api/v1/users/{id}")
+    UserDto getUserById(@PathVariable long id){
+        return new UserDto(userService.getUser(id));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -106,9 +113,9 @@ public class UserController {
     }
     @ExceptionHandler(InvalidTokenException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    ApiError handleInvalidTokenException(InvalidTokenException exception){
+    ApiError handleInvalidTokenException(InvalidTokenException exception, HttpServletRequest request){
         ApiError apiError=new ApiError();
-        apiError.setPath("/api/v1/users");
+        apiError.setPath(request.getRequestURI());
 
         apiError.setMessage(exception.getMessage());
         apiError.setStatus(400);
@@ -120,6 +127,26 @@ public class UserController {
 
         return apiError;
 
-
 }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ApiError handleEntityNotFoundException(NotFoundException exception,HttpServletRequest request){
+        ApiError apiError=new ApiError();
+        apiError.setPath(request.getRequestURI());
+
+        apiError.setMessage(exception.getMessage());
+        apiError.setStatus(404);
+
+        /*for (var fieldError:exception.getBindingResult().getFieldErrors()) {
+            validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }*/
+        /*var validationErrors=exception.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField,FieldError::getDefaultMessage,(existing,replacing)->existing));*/
+
+        return apiError;
+
+
+
+
+    }
 }

@@ -3,6 +3,7 @@ import Home from "../pages/Home/index.jsx";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App.jsx"
 import Activation from "../pages/Activation/index.jsx";
+import { User } from "@/pages/User/index.jsx";
 
 
 
@@ -24,6 +25,10 @@ export default createBrowserRouter([
     {
       path: "/activation/:token",
       Component: Activation,
+    },
+    {
+      path: "/user/:id",
+      Component: User,
     },
   ]
 }

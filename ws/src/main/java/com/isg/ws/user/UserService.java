@@ -1,8 +1,10 @@
 package com.isg.ws.user;
 
+import com.isg.ws.dto.UserDto;
 import com.isg.ws.email.EmailService;
 import com.isg.ws.user.exception.AtivationNotifictionException;
 import com.isg.ws.user.exception.InvalidTokenException;
+import com.isg.ws.user.exception.NotFoundException;
 import com.isg.ws.user.exception.NotUniqueEmailException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +56,9 @@ public class UserService {
 
     public Page<User> getUsers(Pageable page) {
         return userRepository.findAll(page);
+    }
+
+    public User getUser(long id) {
+        return userRepository.findById(id).orElseThrow(()->new NotFoundException(id));
     }
 }
