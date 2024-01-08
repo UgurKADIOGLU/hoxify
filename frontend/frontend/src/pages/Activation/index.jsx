@@ -22,7 +22,7 @@ export default function Activation() {
       }
     }
     activate();
-  }, []);
+  }, [token]);
 
   return (
     <>

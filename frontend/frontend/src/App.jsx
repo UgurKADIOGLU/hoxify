@@ -4,6 +4,8 @@ import { LanguageSelector } from './shred/componants/LanguageSelector'
 
 import { NavBar } from './shred/componants/NavBar'
 
+import { Link } from 'react-router-dom'
+
 function App() {
 
   
